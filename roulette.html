@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>ルーレット</title>
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script>
+        //マス目を作る
+            var i;
+            var j;
+            var roulette_id;
+            var random;
+            var roulette_number = new Array();
+            function set_squares(){
+                for(i=1; i<=4; i++){
+                    $("#squares").append("<tr id='table_" + i + "'></tr>");
+                    for(j=1; j<=4; j++){
+                        var num = 4*i+j-4;
+                        roulette_number.push(num);
+                        $("#table_" + i).append("<td id='block_" + num + "'>");
+                        $("#block_" + num).html(num)
+                    }
+                }
+                $("td")
+                    .css("border", "solid 2px #000000")
+                    .css("text-align","center")
+                    .css("fontSize","30px")
+                    .width(100)
+                    .height(100);
+            }
+            //スタートボタンを押したら色が変わる
+            function set_roulette(){
+                console.log;
+                random = Math.floor(Math.random()*16);
+                $("td").css("backgroundColor", "#ffffff");
+                $("#block_" + roulette_number[random]).css("backgroundColor", "#FFA07A");
+                $(".done").css("backgroundColor","#FFDAB9");
+            }
+            //100ミリ秒に一回ルーレットを回す
+            function start_roulette(){
+                roulette_id = setInterval(set_roulette, 100);
+            }
+            //ストップボタンでルーレットが止まり、止まったマスの色が変わる
+            function stop_roulette(){
+                clearInterval(roulette_id);
+                $("#block_" + roulette_number[random]).css("backgroundColor", "#FF6347");
+                $("#block_" + roulette_number[random]).addClass("done");
+                roulette_number.splice(random, 1, 0);
+            }
+            function reset_roulette(){
+                clearInterval(roulette_id);
+                $("td").removeClass("done");
+            }
+            //読み込み後に全ての処理を実行する
+            $(function(){
+                set_squares();
+                $("#start").click(start_roulette);
+                $("#stop").click(stop_roulette);
+                $("#reset").click(reset_roulette);
+            });
+        </script>
+    </head>
+    <body>
+        <table id="squares">
+            
+        </table>
+        <button id="start">スタート</button>
+        <button id="stop">ストップ</button>
+        <button id="reset">リセット</button>
+    </body>
+</html>
