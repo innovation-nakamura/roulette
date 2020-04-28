@@ -30,8 +30,7 @@
             }
             //スタートボタンを押したら色が変わる
             function set_roulette(){
-                console.log;
-                random = Math.floor(Math.random()*16);
+                random = Math.floor(Math.random() * roulette_number.length);
                 $("td").css("backgroundColor", "#ffffff");
                 $("#block_" + roulette_number[random]).css("backgroundColor", "#FFA07A");
                 $(".done").css("backgroundColor","#FFDAB9");
@@ -45,11 +44,12 @@
                 clearInterval(roulette_id);
                 $("#block_" + roulette_number[random]).css("backgroundColor", "#FF6347");
                 $("#block_" + roulette_number[random]).addClass("done");
-                roulette_number.splice(random, 1, 0);
+                roulette_number.splice(random, 1);
             }
             function reset_roulette(){
                 clearInterval(roulette_id);
-                $("td").removeClass("done");
+                $("td").removeClass("done").css("backgroundColor", "#ffffff");
+                roulette_number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
             }
             //読み込み後に全ての処理を実行する
             $(function(){
